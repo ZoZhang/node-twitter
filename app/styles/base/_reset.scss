@@ -3,7 +3,7 @@
 @import '../abstracts/variables';
 
 body {
-  font-size: 13px;
+  font-size: 15px;
   min-height: 100vh;
   background-color: $dark-jungle-green;
   color: $grey-blue;
@@ -35,21 +35,26 @@ a {
   }
 }
 
+p {
+  padding:0;
+  margin:0;
+}
+
 hr {
   border-color: $dark-jungle-green;
 }
 
 .btn {
-  border-radius: 5px;
+  border-radius: 10px;
   font-size: 11px;
   padding: 3px 8px;
   color: $white;
   background-color: $dodger-blue;
 
   &:hover {
-    background-color: lighten($dodger-blue, 5%);
     cursor: pointer;
     color: $white;
+    background-color: darken($dodger-blue, 15%);
   }
 }
 
@@ -88,4 +93,13 @@ pre {
 
 pre code {
   color: black;
+}
+
+textarea {
+  min-height: 5rem;
+
+  &:focus {
+    border: none;
+    outline: none;
+  }
 }

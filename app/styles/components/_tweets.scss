@@ -25,12 +25,13 @@
 }
 
 .tweet__description {
-  padding-left: 25px;
+  padding-left: 16px;
 }
 
 .tweet__content {
-  margin: 5px 0 10px;
+  line-height: 2rem;
   word-wrap: break-word;
+  margin:5px 0 10px 0.2rem;
 }
 
 .tweet__form {
@@ -38,7 +39,7 @@
     background-color: $jungle-green;
 
     &:hover {
-      background-color: lighten($jungle-green, 5%);
+      background-color: darken($jungle-green, 15%);
     }
   }
   .tweet__delete {
@@ -46,7 +47,7 @@
     background-color: $go-red;
 
     &:hover {
-      background-color: lighten($go-red, 5%);
+      background-color: darken($go-red, 15%);
     }
   }
 }
@@ -91,4 +92,32 @@
 
 .notification-icon {
   margin-right: 10px;
+}
+
+.recommanded-user  {
+  ul {
+    margin:0 0 0 0;
+    li {
+      margin: 0 0 1rem 0;
+
+      a.btn {
+        height: 26px;
+        float: right;
+        margin: 1rem 0 0 1rem;
+      }
+    }
+  }
+}
+
+.new-tweet-iframe {
+  form {
+    flex:1;
+    position: relative;
+
+    button {
+      position: absolute;
+      right: 12px;
+      bottom: 8px;
+    }
+  }
 }

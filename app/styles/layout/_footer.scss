@@ -3,6 +3,9 @@
 footer {
   text-align: center;
   background-color: #243447;
-  padding-top: 30px;
-  height: 150px;
+  height: auto;
+
+  p {
+    padding: 30px;
+  }
 }

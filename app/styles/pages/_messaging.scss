@@ -24,7 +24,34 @@ span.message {
 }
 
 .chatlist {
+  width:100%;
   margin-left: 20px;
+
+  li {
+    display: flex;
+    justify-content: end;
+    margin-bottom: 20px;
+    padding-bottom: 17px;
+    border-bottom: 1px solid #cccc;
+
+    .chat-users {
+      flex:0;
+    }
+
+    .message{
+      flex: 4;
+      display: flex;
+      overflow: scroll;
+      padding: 2px 8px 0 10px;
+      word-break: break-word;
+      justify-content: flex-start;
+
+      .msgtime {
+
+      }
+    }
+
+  }
 }
 
 .chat-image {
@@ -60,7 +87,7 @@ a.logout {
 }
 
 .chatgroup {
-  margin-bottom: 20px;
+  margin:0 0 20px 0!important;
 }
 
 .chat-bubble {

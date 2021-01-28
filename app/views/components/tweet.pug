@@ -1,25 +1,37 @@
 .tweet(data-tweetId = tweet._id)
-.tweet(data-tweetId = tweet._id)
   .row
-    .col-1
-      img(class='tweet__image', src=tweet.user.github.avatar_url)
+    .col-1.mt-1
+      img(class='tweet__image', src=tweet.user.avatar_url)
     .col-11.tweet__description
       span.tweet__username-date
         span.tweet__username
           -var name = tweet.user.name ? tweet.user.name : tweet.user.username
           a(href="/users/"+tweet.user._id) #{name}
         span.tweet__date
-          a(data-toggle='modal', href="#tweet-modal-"+tweet._id)  • #{moment(tweet.createdAt).format("MMM D, YYYY [at] h:mm a")}
-        // The same replace method in app.js file
-        // TODO: find solution to reuse the same code
+          a(data-toggle='modal', href="#tweet-modal-"+tweet._id)  • #{moment(tweet.createdAt).format("D MMM YYYY [à] h:mm")}
+        if (tweet.user._id == req.user.id)
+          span.float-right
+            form.d-inline-block.tweet__form(action="/tweets/"+tweet.id+"?_method=DELETE", method="post")
+              button.btn.tweet__delete(type="submit")
+                i.far.fa-trash-alt
         -
           var tweet_m = tweet.body        
-          tweet_m = tweet_m.replace(/#(\w+)/g, '<a href="/tweets/hashtag/$1">#$1</a>');      
-      p.tweet__content!= tweet_m   
-      if (tweet.user._id == req.user.id)
-        form.tweet__form(action="/tweets/"+tweet.id+"?_method=POST", method="post")        
-          a.btn.tweet__edit(href="/tweets/"+tweet._id, type="submit") Edit          
-        form.tweet__form(action="/tweets/"+tweet.id+"?_method=DELETE", method="post")
-          button.btn.tweet__delete(type="submit") Delete
+          tweet_m = tweet_m.replace(/#(\w+)/g, '<a href="/tweets/hashtag/$1">#$1</a>');
+          tweet_m = tweet_m.replace(/(http[s]?:\/\/([\w-]+.)+([:\d+])?(\/[\w-\.\/\?%&=]*)?)/gi, '<a href="$1">$1</a>');
+        p.tweet__content!= tweet_m
+          div.form-edition
+            a(class='comment-list mr-3', data-toggle='modal', href="#tweet-modal-comments-"+tweet._id)
+              i.far.fa-comments
+              - if(tweet.comments.length)
+                  span.ml-2 #{tweet.comments.length}
 
-    include comments
+            a(class='tweet-share mr-3', href="#")
+              i.far.fa-share-square
+
+            a(class='tweet-like mr-3', href="#")
+              i.far.fa-thumbs-up
+
+            form.d-inline-block.tweet__form(action="/tweets/"+tweet.id+"?_method=POST", method="post")
+              a.d-none.btn.tweet__edit(href="/tweets/"+tweet._id, type="submit") Édition
+
+            include modals/new-comment-modal

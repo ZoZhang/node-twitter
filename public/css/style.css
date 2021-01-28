@@ -1,6 +1,6 @@
 /* General */
 body {
-  font-size: 13px;
+  font-size: 15px;
   min-height: 100vh;
   background-color: #141D26;
   color: #8899A6; }
@@ -10,7 +10,7 @@ body > div.container {
   min-height: calc(100vh - 50px - 150px);
   padding-top: 30px;
   padding-bottom: 30px; }
-  
+
 h4 {
   font-size: 1.2rem; }
 
@@ -25,22 +25,30 @@ a {
     color: #0c85d0;
     text-decoration: none; }
 
+p {
+  padding: 0;
+  margin: 0; }
+
 hr {
   border-color: #141D26; }
 
 .btn {
-  border-radius: 5px;
+  border-radius: 10px;
   font-size: 11px;
   padding: 3px 8px;
   color: #ffffff;
   background-color: #1DA1F2; }
   .btn:hover {
-    background-color: #35abf3;
+    cursor: pointer;
+    color: #ffffff;
+    background-color: #0b76b8; }
+
+.btn__delete {
+  background-color: firebrick; }
+  .btn__delete:hover {
+    background-color: #ff0000;
     cursor: pointer;
     color: #ffffff; }
-
-.login-btn {
-  margin-top: 40px; }
 
 textarea {
   color: #8899A6;
@@ -69,26 +77,33 @@ pre {
 pre code {
   color: black; }
 
+textarea {
+  min-height: 5rem; }
+  textarea:focus {
+    border: none;
+    outline: none; }
+
 /* Navbar */
-.navbar__main-navigation span,
-.navbar__logo {
-  display: none; }
-  @media (min-width: 992px) {
-    .navbar__main-navigation span,
-    .navbar__logo {
-      display: inline-block;
-      text-align: center; } }
+@media (min-width: 992px) {
+  .navbar__main-navigation span,
+  .navbar__logo {
+    display: inline-block;
+    text-align: center; } }
 
 .navbar {
   background-color: #1f2e3f;
-  height: 50px;
+  height: 95px;
   margin: 0;
   padding: 0;
   font-size: 14px;
-  border-bottom: 1px solid #000; }
+  border-bottom: 1px solid #000;
+  position: fixed;
+  width: 100%;
+  z-index: 10000; }
   .navbar .container {
     display: flex;
     align-items: center;
+    text-align: center;
     height: 100%; }
     .navbar .container > * {
       flex-grow: 1; }
@@ -128,6 +143,13 @@ pre code {
         margin-bottom: -2px; }
     .navbar__main-navigation a i {
       margin-right: 4px; }
+  .navbar__main-navigation li.active {
+    color: #1DA1F2 !important; }
+    .navbar__main-navigation li.active a {
+      color: #1DA1F2 !important;
+      border-bottom: 2px solid #1DA1F2; }
+      .navbar__main-navigation li.active a > * {
+        margin-bottom: -2px; }
   .navbar__main-navigation .fa {
     font-size: 22px;
     display: inline-block;
@@ -139,11 +161,9 @@ pre code {
         padding-left: 0; } }
 
 .navbar__logo {
-  position: absolute;
-  left: 50%;
   margin-left: -13px; }
   .navbar__logo img {
-    height: 26px; }
+    height: 76px; }
 
 .navbar__profile {
   display: flex;
@@ -156,7 +176,8 @@ pre code {
     padding-right: 10px; }
 
 .navbar__new-tweet {
-  text-align: right; }
+  text-align: right;
+  margin-right: 15px; }
   .navbar__new-tweet .navbar__new-tweet-button {
     color: #ffffff;
     font-size: 14px;
@@ -165,8 +186,16 @@ pre code {
     .navbar__new-tweet .navbar__new-tweet-button:hover {
       color: #ffffff; }
 
+.navbar__profile-logout {
+  background-color: #d9534f; }
+  .navbar__profile-logout:hover {
+    background-color: #b52b27; }
+
 .navbar__notifications {
   color: red !important; }
+
+.container > .row {
+  margin-top: 5rem; }
 
 .follower, .tweet, .profile, .user-information, .useful-links,
 .recent-visits, .analytics {
@@ -213,23 +242,23 @@ pre code {
   height: 20px; }
 
 .tweet__description {
-  padding-left: 25px; }
+  padding-left: 16px; }
 
 .tweet__content {
-  margin: 5px 0 10px;
-  word-wrap: break-word; }
+  line-height: 2rem;
+  word-wrap: break-word;
+  margin: 5px 0 10px 0.2rem; }
 
 .tweet__form .tweet__edit {
   background-color: #2AAF81; }
   .tweet__form .tweet__edit:hover {
-    background-color: #2fc490; }
+    background-color: #1b7154; }
 
-.tweet__form .tweet__delete {  
-  margin-top: -10%; 
-  margin-left: 10%;
+.tweet__form .tweet__delete {
+  margin-left: 10px;
   background-color: #E53939; }
   .tweet__form .tweet__delete:hover {
-    background-color: #e85050; }
+    background-color: #b91818; }
 
 .tweet__username a {
   color: #ffffff;
@@ -266,6 +295,23 @@ pre code {
 .notification-icon {
   margin-right: 10px; }
 
+.recommanded-user ul {
+  margin: 0 0 0 0; }
+  .recommanded-user ul li {
+    margin: 0 0 1rem 0; }
+    .recommanded-user ul li a.btn {
+      height: 26px;
+      float: right;
+      margin: 1rem 0 0 1rem; }
+
+.new-tweet-iframe form {
+  flex: 1;
+  position: relative; }
+  .new-tweet-iframe form button {
+    position: absolute;
+    right: 12px;
+    bottom: 8px; }
+
 .pagination {
   text-align: center; }
   .pagination a,
@@ -287,7 +333,8 @@ pre code {
     background-color: #1DA1F2 !important; }
 
 .modal-dialog {
-  margin-top: 60px; }
+  margin-top: 7rem;
+  max-width: 540px; }
 
 .modal-content {
   background: none; }
@@ -322,24 +369,17 @@ pre code {
   margin-top: 10px;
   display: block; }
 
-  .delete-confirmation__button{
-    font-size: 14px;
-    padding: 4px 10px;
-    background-color: firebrick;
-    color: #fff;
-    margin: auto;
-    margin-top: 10px;
-    display: block; }
-  .delete-confirmation__button:hover {
-    background-color: #ff0000; }
+.delete-confirmation__button {
+  font-size: 14px;
+  padding: 4px 10px;
+  background-color: firebrick;
+  color: #fff;
+  margin: auto;
+  margin-top: 10px;
+  display: block; }
 
-  .btn__delete{
-    background-color: firebrick; }
-
-  .btn__delete:hover{
-    background-color: #ff0000;}
-
-  
+.delete-confirmation__button:hover {
+  background-color: #ff0000; }
 
 /* Profile Card */
 .follower, .tweet, .profile, .user-information, .useful-links,
@@ -363,7 +403,12 @@ pre code {
   border: 0;
   border-radius: 50%;
   width: 150px;
-  max-width: 100%; }
+  max-width: 100%;
+  overflow: hidden;
+  min-width: 138px;
+  min-height: 138px;
+  padding: 6px;
+  background-color: #fff; }
 
 .profile__messaging-options .btn {
   margin: 10px; }
@@ -371,10 +416,38 @@ pre code {
 .profile__follow {
   margin: 10px 0; }
 
-.profile__follow-button.following {
+.following-list {
+  text-align: left;
+  border-bottom: 1px solid #1DA1F2; }
+  .following-list a p {
+    color: #ffffff; }
+
+.profile__follow-button.following,
+.profile__follow__delete-button.following {
   background-color: #E53939; }
-  .profile__follow-button.following:hover {
-    background-color: #e85050; }
+  .profile__follow-button.following:hover,
+  .profile__follow__delete-button.following:hover {
+    background-color: #b91818; }
+
+.profile-description p {
+  border: 1px solid #000;
+  border-radius: 11px;
+  padding: 8px;
+  word-break: break-all;
+  line-height: 1.6rem;
+  background-color: #1B2836; }
+
+/* Signup Page */
+.signup-container {
+  text-align: center;
+  margin: auto; }
+
+.signup-form legend {
+  margin-bottom: 5px; }
+
+.signup-form .form-actions input {
+  font-size: 15px;
+  font-weight: bold; }
 
 /* Login Page */
 .login {
@@ -384,8 +457,8 @@ pre code {
   text-align: center;
   margin: auto; }
 
-.github-btn {
-  margin-left: 20px; }
+.login-form .btn {
+  font-size: 15px; }
 
 .icon-container {
   margin-left: 6px; }
@@ -423,6 +496,10 @@ pre code {
 .useful-links h4,
 .recent-visits h4 {
   color: #fff; }
+
+.recent-visits h4 {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #1DA1F2; }
 
 .user-information__stats ul {
   margin-top: 10px;
@@ -551,7 +628,23 @@ span.message {
   font-size: 10px; }
 
 .chatlist {
+  width: 100%;
   margin-left: 20px; }
+  .chatlist li {
+    display: flex;
+    justify-content: end;
+    margin-bottom: 20px;
+    padding-bottom: 17px;
+    border-bottom: 1px solid #cccc; }
+    .chatlist li .chat-users {
+      flex: 0; }
+    .chatlist li .message {
+      flex: 4;
+      display: flex;
+      overflow: scroll;
+      padding: 2px 8px 0 10px;
+      word-break: break-word;
+      justify-content: flex-start; }
 
 .chat-image {
   margin-left: 5px;
@@ -578,7 +671,7 @@ a.logout {
   margin-right: 12px; }
 
 .chatgroup {
-  margin-bottom: 20px; }
+  margin: 0 0 20px 0 !important; }
 
 .chat-bubble {
   margin-bottom: 10px; }
@@ -587,8 +680,9 @@ a.logout {
 footer {
   text-align: center;
   background-color: #243447;
-  padding-top: 30px;
-  height: 150px; }
+  height: auto; }
+  footer p {
+    padding: 30px; }
 
 /* Media Queries */
 #error-stack-trace {
