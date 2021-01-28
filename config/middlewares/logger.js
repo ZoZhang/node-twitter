@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 const Analytics = mongoose.model('Analytics');
 const logger = require('../../app/middlewares/logger');
 
-
 exports.analytics = (req, res, next) => {
+  next();
+  return;
   // A lot of analytics is missed because users might have
   // malinformed IPs. Let's just get rid of the IP data altogether and log user irrepsective
   // of that. For backward compatiblity, we will just store a dummy IP for all future users.

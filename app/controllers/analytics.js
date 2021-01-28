@@ -17,7 +17,7 @@ exports.createPagination = (req, pages, page) => {
     str +=
       '<li class="page-item no"><a class="page-link" href="?page=' +
       (page - 1) +
-      '">Previous</a></li>';
+      '">Précédente</a></li>';
   }
   // Show all the pagination elements if there are less than 6 pages total
   if (pages < 6) {
@@ -98,7 +98,7 @@ exports.createPagination = (req, pages, page) => {
     str +=
       '<li class="page-item no"><a class="page-link" href="?page=' +
       (page + 1) +
-      '">Next</a></li>';
+      '">Prochaine</a></li>';
   }
   // Return the pagination string to be outputted in the pug templates
   return str;
