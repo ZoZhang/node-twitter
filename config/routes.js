@@ -22,20 +22,6 @@ module.exports = (app, passport, auth) => {
   router.get("/logout", users.logout);
 
   /**
-   * Authentication routes
-   */
-  router.get(
-    "/auth/github",
-    passport.authenticate("github", { failureRedirect: "/login" }),
-    users.signin
-  );
-  router.get(
-    "/auth/github/callback",
-    passport.authenticate("github", { failureRedirect: "/login" }),
-    users.authCallback
-  );
-
-  /**
    * API routes
    */
   router.get("/apiv1/tweets", apiv1.tweetList);
@@ -73,13 +59,19 @@ module.exports = (app, passport, auth) => {
     "/users/sessions",
     passport.authenticate("local", {
       failureRedirect: "/login",
-      failureFlash: "Invalid email or password"
+      failureFlash: "l'e-mail ou mot de passe invalide"
     }),
     users.session
   );
   router.post("/users/:userId/follow", follows.follow);
-  router.post("/users/:userId/delete", users.delete);
+  router.post("/users/:userId/delete", follows.unfollow);
   router.param("userId", users.user);
+
+  /**
+   *
+   */
+  router.get("/profile/:userId", users.profile);
+  router.post("/profile/:userId/update", users.update);
 
   /**
    * Chat routes
