@@ -13,7 +13,7 @@ exports.tweet = (req, res, next, id) => {
       return next(err);
     }
     if (!tweet) {
-      return next(new Error("Failed to load tweet" + id));
+      return next(new Error("Échec du chargement du tweet" + id));
     }
     req.tweet = tweet;
     next();
@@ -83,10 +83,20 @@ let showTweets = (req, res, criteria) => {
   };
   let followingCount = req.user.following.length;
   let followerCount = req.user.followers.length;
-  let tweets, tweetCount, pageViews, analytics, pagination;
+  let tweets, tweetCount, pageViews, analytics, pagination, recommendedUser;
   User.countUserTweets(req.user._id).then(result => {
     tweetCount = result;
   });
+
+  User.list(req.user._id).then(result => {
+    const currentIndex = result.indexOf(req.user._id);
+    if (currentIndex) {
+      result.splice(currentIndex, 1);
+    }
+
+    recommendedUser = result;
+  });
+
   Tweet.list(options)
     .then(result => {
       tweets = result;
@@ -104,10 +114,12 @@ let showTweets = (req, res, criteria) => {
     .then(result => {
       analytics = result;
       res.render("pages/index", {
-        title: "List of Tweets",
+        title: "Liste des tweets",
         tweets: tweets,
+        recommendedUser: recommendedUser,
         analytics: analytics,
         page: page + 1,
+        pageName: 'home',
         tweetCount: tweetCount,
         pagination: pagination,
         followerCount: followerCount,

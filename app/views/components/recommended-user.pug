@@ -1,0 +1,25 @@
+- var currentUserId = req.user._id.toString()
+
+- if(recommendedUser.length)
+  .col-xl-3.col-lg-4.third-column
+    .recommanded-user.recent-visits.col-xs-6.col-md-12
+      h4.recent-visits__title Recommandé Utilisateur
+      ul.recent-visits__list
+        each user in recommendedUser
+          if user._id != currentUserId
+            - var isFollwed = user.followers.indexOf(currentUserId) !== -1 ? true : false;
+            li
+              div.following-list
+                a(href="/users/"+user._id)
+                  img(class='tweet__image chat-image d-inline-block mb-4', src=user.avatar_url)
+                  p.d-inline-block.mt-2
+                    span #{user.username}
+                    br
+                    span
+                      i
+                      small @#{user.url_path}
+                  if(isFollwed)
+                    a.btn.profile__follow__delete-button(class='following', href="javascript:void(0)", data-userid=user._id, data-logged=currentUserId, title="Unfollow") Unfollow
+                  else
+                    a.btn.profile__follow-button(href="javascript:void(0)", data-userid=user._id, data-logged=currentUserId, title="follow") Follow
+

@@ -42,7 +42,7 @@ TweetSchema.pre("save", function(next) {
 // Validations in the schema
 TweetSchema.path("body").validate(
   body => body.length > 0,
-  "Tweet body cannot be blank"
+  "Le contenue du Tweet est obligatoire!"
 );
 
 TweetSchema.virtual("_favorites").set(function(user) {
@@ -80,7 +80,7 @@ TweetSchema.methods = {
         body: comment.body,
         user: user._id,
         commenterName: user.name,
-        commenterPicture: user.github.avatar_url
+        commenterPicture: user.avatar_url
       });
       this.save(cb);
     } else {
@@ -88,7 +88,7 @@ TweetSchema.methods = {
         body: comment.body,
         user: user._id,
         commenterName: user.username,
-        commenterPicture: user.github.avatar_url
+        commenterPicture: user.avatar_url
       });
 
       this.save(cb);
@@ -111,7 +111,7 @@ TweetSchema.statics = {
   // Load tweets
   load: function(id, callback) {
     this.findOne({ _id: id })
-      .populate("user", "name username provider github")
+      .populate("user", "username provider avatar_url url_path")
       .populate("comments.user")
       .exec(callback);
   },
@@ -119,20 +119,23 @@ TweetSchema.statics = {
   list: function(options) {
     const criteria = options.criteria || {};
     return this.find(criteria)
-      .populate("user", "name username provider github")
+      .populate("user", "username provider avatar_url url_path")
+      .populate("comments.user")
       .sort({ createdAt: -1 })
       .limit(options.perPage)
       .skip(options.perPage * options.page);
   },
+
   // List tweets
   limitedList: function(options) {
     const criteria = options.criteria || {};
     return this.find(criteria)
-      .populate("user", "name username")
+      .populate("user", "username url_path")
       .sort({ createdAt: -1 })
       .limit(options.perPage)
       .skip(options.perPage * options.page);
   },
+
   // Tweets of User
   userTweets: function(id, callback) {
     this.find({ user: ObjectId(id) })
