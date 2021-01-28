@@ -1,14 +1,37 @@
 extends ../layouts/default
 
 block content
-  - var currentUserId = req.user._id.toString()
   - var userId = user._id.toString()
+  - var currentUserId = req.user._id.toString()
   .row#profile-page
-    .col-lg-4
-      include ../components/profile-card
-      - if (currentUserId === userId)
-        a.btn.btn__delete(data-toggle='modal', href='.delete-confirmation')
-              span Delete
-    .col-lg-8
-      include ../components/tweets
-      include ../components/modals/delete-confirmation-modal
+    .col-lg-12
+      .profile
+        img(class="profile__image", src=user.avatar_url)
+        div.profile__user-info.col-md-6.m-auto.mt-2: form(method='post', action="/profile/"+userId+"/update", class='form-vertical')
+          fieldset
+            legend: strong.text-info
+            input(type="hidden", name="profile")
+
+            div.form-group.text-left
+              label Username:
+              input.form-control(name='username', type='text', value=user.username, required=true, autofocus)
+
+            div.form-group.text-left
+              label E-mail:
+              input.form-control(name='email', type='email', value=user.email, required=true)
+
+            div.form-group.text-left
+              label Mot de passe:
+              input.form-control(name='password', type='password', required=false)
+
+            div.form-group.text-left
+              label Description:
+              textarea(type='text', name='description', placeholder='Entrez votre histoire', maxlength='280', required=false) #{user.bio}
+
+            - if (currentUserId === userId)
+            div.form-actions
+               input.p-2.mr-5.btn.btn-primary(type='submit', value='Enregistrer')
+
+               a.btn.btn__delete.p-2(data-toggle='modal', href='.delete-confirmation')
+                span Supprimer
+                include ../components/modals/delete-confirmation-modal

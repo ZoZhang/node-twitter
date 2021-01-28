@@ -1,0 +1,11 @@
+extends ../layouts/default
+
+block content
+  - var currentUserId = req.user._id.toString()
+  - var userId = user._id.toString()
+  .row#profile-page
+    .col-lg-4
+      include ../components/profile-card
+    .col-lg-8
+      include ../components/tweets
+      include ../components/modals/delete-confirmation-modal

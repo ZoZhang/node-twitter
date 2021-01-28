@@ -2,21 +2,23 @@ const mongoose = require("mongoose");
 const Tweet = mongoose.model("Tweet");
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
-const authTypes = ['github'];
+const authTypes = ['local'];
 
 // ## Define UserSchema
 const UserSchema = new Schema(
   {
-    name: String,
+    bio: String,
     email: String,
     username: String,
+    url_path: String,
     provider: String,
+    avatar_url: String,
     hashedPassword: String,
     salt: String,
-    github: {},
     followers: [{ type: Schema.ObjectId, ref: "User" }],
     following: [{ type: Schema.ObjectId, ref: "User" }],
-    tweets: Number
+    tweets: Number,
+    createdAt: { type: Date, default: Date.now }
   },
   { usePushEach: true }
 );
@@ -33,60 +35,61 @@ UserSchema.virtual("password")
 
 const validatePresenceOf = value => value && value.length;
 
-UserSchema.path("name").validate(function(name) {
-  if (authTypes.indexOf(this.provider) !== -1) {
-    return true;
-  }
-  return name.length;
-}, "Name cannot be blank");
-
 UserSchema.path("email").validate(function(email) {
   if (authTypes.indexOf(this.provider) !== -1) {
     return true;
   }
   return email.length;
-}, "Email cannot be blank");
+}, "L'E-mail est obligatoire!");
 
 UserSchema.path("username").validate(function(username) {
   if (authTypes.indexOf(this.provider) !== -1) {
     return true;
   }
   return username.length;
-}, "username cannot be blank");
+}, "Le username est obligatoire!");
 
 UserSchema.path("hashedPassword").validate(function(hashedPassword) {
   if (authTypes.indexOf(this.provider) !== -1) {
     return true;
   }
   return hashedPassword.length;
-}, "Password cannot be blank");
+}, "Le mot de passe est obligatoire!");
 
 UserSchema.pre("save", function(next) {
   if (
     !validatePresenceOf(this.password) &&
     authTypes.indexOf(this.provider) === -1
   ) {
-    next(new Error("Invalid password"));
+    next(new Error("le mot de passe est invalide !"));
   } else {
     next();
   }
 });
 
 UserSchema.methods = {
-  authenticate: function(plainText) {
-    return this.encryptPassword(plainText) === this.hashedPassword;
+  authenticate: function(password) {
+    return bcrypt.compare(password, this.hashedPassword).then((result)=>{
+      if(result){
+        console.log('authentication successful');
+        return true;
+      } else {
+        console.log('authentication failed. Password doesn\'t match');
+        return false;
+      }
+    });
   },
 
   makeSalt: function() {
-    return Math.round(new Date().valueOf() * Math.random());
+    return bcrypt.genSaltSync(10);
   },
 
   encryptPassword: function(password) {
     if (!password) {
-      return "";
+      return '';
     }
     let salt = this.makeSalt();
-    return bcrypt.hashSync(password, salt)
+    return bcrypt.hashSync(password, salt);
   },
 };
 
@@ -102,7 +105,7 @@ UserSchema.statics = {
       .exec(cb);
   },
   load: function(options, cb) {
-    options.select = options.select || "name username github";
+    options.select = options.select || "username avatar_url url_path";
     return this.findOne(options.criteria)
       .select(options.select)
       .exec(cb);
@@ -110,7 +113,7 @@ UserSchema.statics = {
   list: function(options) {
     const criteria = options.criteria || {};
     return this.find(criteria)
-      .populate("user", "name username")
+      .populate("user", "username avatar_url url_path")
       .limit(options.perPage)
       .skip(options.perPage * options.page);
   },

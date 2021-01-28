@@ -20,6 +20,11 @@
   border-radius: 50%;
   width: 150px;
   max-width: 100%;
+  overflow: hidden;
+  min-width: 138px;
+  min-height: 138px;
+  padding: 6px;
+  background-color: #fff;
 }
 
 .profile__messaging-options {
@@ -32,10 +37,33 @@
   margin: 10px 0;
 }
 
-.profile__follow-button.following {
+.following-list {
+  text-align: left;
+  border-bottom: 1px solid $dodger-blue;
+
+  a {
+    p {
+      color: $white;
+    }
+  }
+}
+
+.profile__follow-button.following,
+.profile__follow__delete-button.following {
   background-color: $go-red;
 
   &:hover {
-    background-color: lighten($go-red, 5%);
+    background-color: darken($go-red, 15%);
+  }
+}
+
+.profile-description {
+  p {
+    border: 1px solid $black;
+    border-radius: 11px;
+    padding: 8px;
+    word-break: break-all;
+    line-height: 1.6rem;
+    background-color: $yankees-blue;
   }
 }

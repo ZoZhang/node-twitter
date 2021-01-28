@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const LocalStrategy = require("passport-local").Strategy;
-const GitHubStrategy = require("passport-github").Strategy;
 const User = mongoose.model("User");
 
 module.exports = (passport, config) => {
@@ -30,49 +29,13 @@ module.exports = (passport, config) => {
             return done(err);
           }
           if (!user) {
-            return done(null, false, { message: "Unknown user" });
+            return done(null, false, { message: 'Utilisateur inconnu' });
           }
+
           if (!user.authenticate(password)) {
-            return done(null, false, { message: "Invalid password" });
+            return done(null, false, { message: 'Mot de passe incorrect' });
           }
           return done(null, user);
-        });
-      }
-    )
-  );
-
-  // use github strategy
-  passport.use(
-    new GitHubStrategy(
-      {
-        clientID: config.github.clientID,
-        clientSecret: config.github.clientSecret,
-        callbackURL: config.github.callbackURL
-      },
-      (accessToken, refreshToken, profile, done) => {
-        const options = {
-          criteria: { "github.id": parseInt(profile.id) }
-        };
-        User.load(options, (err, user) => {
-          if (!user) {
-            user = new User({
-              name: profile.displayName,
-              // email: profile.emails[0].value,
-              username: profile.username,
-              provider: "github",
-              github: profile._json
-            });
-            user.save(err => {
-              if (err) console.log(err);
-              return done(err, user);
-            });
-          } else {
-            User.findOne({ username: profile.username }, function(err, user) {
-              user.github = profile._json;
-              user.save();
-              return done(err, user);
-            });
-          }
         });
       }
     )

@@ -1,0 +1,40 @@
+extends ../layouts/default
+
+block content
+  .row.signup
+    .col-md-4.signup-container.mt-4
+      form.signup-form(method='post', action="/users", class='form-vertical')
+        fieldset
+          legend: strong.text-info CRÉEZ VOTRE COMPTE
+          input(type="hidden", name="signup")
+          //if message.error
+          //  div.alert.alert-danger Missing username or password
+          //
+          //else
+          //  if message.success
+          //    div.alert.alert-success You are now connected
+
+          div.form-group.text-left
+            label Username:
+            input.form-control(name='username', autofocus, required=true)
+
+          div.form-group.text-left
+            label E-mail:
+            input.form-control(name='email', type='email', required=true)
+
+          div.form-group.text-left
+            label Mot de passe:
+            input.form-control(name='password', type='password', required=true)
+
+          div.form-actions
+            input.w-100.p-2.btn.btn-primary(type='submit', value='S\'inscrire')
+          p.mt-3
+            a.login-button(href="/login") Se connecter
+
+    .row.justify-content-center.text-center.stats-parent-container
+      if (typeof errors !== 'undefined')
+        .fade.in.alert.alert-block.alert-error
+          a.close(data-dismiss="alert", href="javascript:void(0)") x
+          ul
+            each error in errors
+              li = error.type

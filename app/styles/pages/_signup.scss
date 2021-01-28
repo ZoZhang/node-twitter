@@ -1,0 +1,22 @@
+/* Signup Page */
+
+.signup {
+}
+
+.signup-container {
+  text-align: center;
+  margin: auto;
+}
+
+.signup-form {
+     legend {
+         margin-bottom: 5px;
+     }
+
+     .form-actions {
+        input {
+            font-size:15px;
+            font-weight: bold;
+        }
+     }
+}

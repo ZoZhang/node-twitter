@@ -4,8 +4,11 @@
 
 exports.requiresLogin = (req, res, next) => {
   console.log('authenticated', req.isAuthenticated());
-  if (!req.isAuthenticated()) {
-    return res.redirect('/login');
+
+  if (!(req.body.signup !== undefined || req.body.login !== undefined)) {
+    if (!req.isAuthenticated()) {
+      return res.redirect('/login');
+    }
   }
   next();
 };
@@ -44,7 +47,7 @@ exports.comment = {
     if (req.user.id === req.comment.user.id || req.user.id === req.article.user.id) {
       next();
     } else {
-      req.flash('info', 'You are not authorized');
+      req.flash('info', 'Vous n\'êtes pas autorisé');
       res.redirect('/articles/' + req.article.id);
     }
   }
