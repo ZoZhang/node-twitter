@@ -3,8 +3,8 @@
     .modal-content
       .modal-header
         button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-        h4.modal-title Compose new Tweet
+        h4.modal-title Ecrire un nouveau tweet
       .modal-body
         form(method='post', action='/tweets')
-          textarea(type='text', name='body', placeholder='Enter your tweet here', maxlength='280')
+          textarea(type='text', name='body', placeholder='Entrez votre tweet ici', maxlength='280', required=true)
           button.btn.new-tweet__button(type='submit') Tweet

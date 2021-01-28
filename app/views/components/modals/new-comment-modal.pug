@@ -1,0 +1,28 @@
+.modal.fade(id="tweet-modal-comments-" + tweet._id)
+    .modal-dialog(role='document')
+        .modal-content
+            .modal-header
+                button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                h4.modal-title Commentaires
+            .modal-body
+                .col-12.tweet__comments.text-left
+                    if tweet.comments.length > 0
+                        hr
+                        each comment in tweet.comments
+                            if (comment && comment.user)
+                                if (comment.commenterPicture)
+                                    img(class='tweets__comment-image', src=comment.commenterPicture)
+                                else
+                                    img(class='tweets__comment-image', src='http://via.placeholder.com/20x20')
+                                span.tweet__username-date
+                                    span.tweet__username
+                                        if (comment.commenterName && comment.user)
+                                            a(href="/users/" + comment.user)= comment.commenterName
+                                        else if (comment.user)
+                                            a(href="/users/" + comment.user)= comment.user
+                                    span.tweet__date  • #{moment(comment.createdAt).format("D MMM, YYYY [à] h:mm")}
+                                p.tweet__content= comment.body
+                    hr
+                    form(class="tweet__comment-form" method="post", action="/tweets/"+ tweet._id + "/comments")
+                        textarea(type='text', name="body", placeholder='Entrez le commentaire', required=true)
+                        button.btn(type='submit') Commentaire

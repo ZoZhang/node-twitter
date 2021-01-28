@@ -13,9 +13,9 @@
                 a(href="/users/" + comment.user)= comment.commenterName 
             else if (comment.user)
                 a(href="/users/" + comment.user)= comment.user 
-          span.tweet__date  • #{moment(comment.createdAt).format("MMM D, YYYY [at] h:mm a")}
+          span.tweet__date  • #{moment(comment.createdAt).format("D MMM, YYYY [à] h:mm")}
         p.tweet__content= comment.body
   hr
   form(class="tweet__comment-form" method="post", action="/tweets/"+ tweet._id + "/comments")
-    textarea(type='text', name="body", placeholder='Enter the comment')
-    button.btn(type='submit') Comment
+    textarea(type='text', name="body", placeholder='Entrez le commentaire', required=true)
+    button.btn(type='submit') Commentaire

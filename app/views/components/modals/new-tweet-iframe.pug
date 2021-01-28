@@ -1,0 +1,9 @@
+.tweet.new-tweet-iframe.d-flex
+    div.mr-2.text-center
+      img(class='tweet__image', src=req.user.avatar_url)
+      p.text-center
+        small @#{req.user.url_path}
+
+    form(method='post', action='/tweets', class='')
+      textarea(type='text', name='body', placeholder='Entrez votre tweet ici', maxlength='280', required=true)
+      button.btn.new-tweet__button(type='submit') Tweet
