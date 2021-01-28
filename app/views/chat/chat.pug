@@ -6,16 +6,17 @@ block content
       .logged-user
         .row.chatbox
           - if (chats.length == 0)
-            h2 No chats sorry!
+            h2 aucun message reçu !
           ul.chatlist
             - if (chats)
               each chat in chats
                 li
                   - if (chat.sender !=  null)
-                    img(class='tweet__image', src=chat.sender.github.avatar_url)
-                    p.chatMessage
-                    a(class='sender', href="/users/" + chat.sender._id)
-                      span.sender #{chat.sender.username}:
-                    span.message #{chat.message}
-                    p.msgtime #{moment(chat.createdAt).format("MMM D, YYYY [at] h:mm a")}
+                    div.chat-users
+                      a(class='sender', href="/users/" + chat.sender._id)
+                        img(class='tweet__image', src=chat.sender.avatar_url)
+                        p.sender #{chat.sender.username}
+                    div.message
+                      p.message #{chat.message}
+                      span.msgtime #{moment(chat.createdAt).format("D MMM, YYYY [à] h:mm")}
 

@@ -3,9 +3,9 @@
     .modal-content
       .modal-header
         button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-        h4.modal-title Send new message to #{name}
+        h4.modal-title Envoyer un nouveau message à #{name}
       .modal-body
         form(method='post', action='/chats')
-          textarea(type='text', name='body', placeholder='Enter your message here', maxlength='200')
+          textarea(type='text', name='body', placeholder='Entez le message ici', maxlength='200', required=true)
           input(type="hidden", name='receiver', value=user._id)
-          button.new-message__button.btn(type='submit') Send Message  
+          button.text-center.new-message__button.btn(type='submit') Envoyer

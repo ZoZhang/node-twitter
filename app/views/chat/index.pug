@@ -8,14 +8,13 @@ block content
           .container
             h1
               != title
-            p Click on the name/image to send a message.
             div.row.chatgroup
               each user in users
                 div.col-md-3.chat-bubble
                   - var name = user.name ? user.name : user.username
                   - var id = user._id + 'ChatModal';
                   a(data-toggle='modal', href='#'+ id)
-                    img(class='tweet__image chat-image', src=user.github.avatar_url) 
+                    img(class='tweet__image chat-image', src=user.avatar_url)
                     span #{name}
                   - var currentUserId = req.user._id.toString()
                   - var userId = user._id.toString()
@@ -26,16 +25,15 @@ block content
                       .modal-content
                         .modal-header
                           button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-                          h4.modal-title Send new message to #{name}
+                          h4.modal-title Envoyer un nouveau message à #{name}
                         .modal-body
                           form(method='post', action='/chats')
                             .control-group
                               label.control-label(for='chat')
                               .controls
-                                textarea.flat.form-control(type='text', name='body', placeholder='Enter your Message here', maxlength='200')
+                                textarea.flat.form-control(type='text', name='body', placeholder='Entrez le message ici', maxlength='200', required=true)
                                 input(type="hidden", name='receiver', value=user._id)
                               br
-                            .form-actions
-                              button.btn(type='submit') Send Message
+                            .form-actions.text-center
+                              button.btn(type='submit') Envoyer
   include ../components/pagination 
-        

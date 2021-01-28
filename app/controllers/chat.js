@@ -11,7 +11,7 @@ exports.chat = (req, res, next, id) => {
       return next(err);
     }
     if (!chat) {
-      return next(new Error("Failed to load tweet" + id));
+      return next(new Error("Échec du chargement du tweet" + id));
     }
     req.chat = chat;
     next();
@@ -25,7 +25,6 @@ exports.index = (req, res) => {
   const options = {
     perPage: perPage,
     page: page,
-    criteria: { github: { $exists: true } }
   };
   let users, count, pagination;
   User.list(options)
@@ -37,9 +36,10 @@ exports.index = (req, res) => {
       count = result;
       pagination = createPagination(req, Math.ceil(result / perPage), page + 1);
       res.render("chat/index", {
-        title: "Chat User List",
+        title: "Liste des utilisateurs du chat",
         users: users,
         page: page + 1,
+        pageName:'chat',
         pagination: pagination,
         pages: Math.ceil(count / perPage)
       });
@@ -60,7 +60,7 @@ exports.getChat = (req, res) => {
   let chats;
   Chat.list(options).then(result => {
     chats = result;
-    res.render("chat/chat", { chats: chats });
+    res.render("chat/chat", { chats: chats, pageName:'message' });
   });
 };
 
@@ -70,10 +70,9 @@ exports.create = (req, res) => {
     receiver: req.body.receiver,
     sender: req.user.id
   });
-  logger.info("chat instance", chat);
   chat.save(err => {
     const activity = new Activity({
-      activityStream: "sent a message to",
+      activityStream: "envoyé un message à",
       activityKey: chat.id,
       receiver: req.body.receiver,
       sender: req.user.id
