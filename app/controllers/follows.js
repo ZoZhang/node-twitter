@@ -49,3 +49,55 @@ exports.follow = (req, res) => {
     });
   });
 };
+
+exports.unfollow = (req, res) => {
+  const user = req.user;
+  const id = req.url.split("/")[2];
+  // push the current user in the follower list of the target user
+
+  const currentId = user.id;
+
+  // remove following
+  User.findOne({ _id: currentId }, function(err, user) {
+    const itemIndex = user.following.indexOf(id);
+    if (itemIndex !== -1) {
+      user.following.splice(itemIndex, 1);
+    }
+    user.save(err => {
+      const activity = new Activity({
+        activityStream: "unfollow by",
+        activityKey: user,
+        sender: id,
+        receiver: user
+      });
+
+      activity.save(err => {
+        if (err) {
+          logger.error(err);
+          res.render("pages/500");
+        }
+      });
+
+      if (err) {
+        res.status(400);
+      }
+      res.status(201).send({});
+    });
+  });
+
+  // remove follower
+  User.findOne({ _id: id }, function(err, user) {
+
+    const followerIndex = user.followers.indexOf(currentId);
+    if (followerIndex !== -1) {
+      user.followers.splice(followerIndex, 1);
+    }
+    user.save(err => {
+      if (err) {
+        logger.error(err);
+      }
+    });
+  });
+};
+
+

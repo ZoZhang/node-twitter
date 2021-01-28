@@ -36,6 +36,28 @@ $(document).ready(function() {
     });
   });
 
+  $('.profile__follow__delete-button').on('click', function(e) {
+    const userID = $(e.currentTarget).data('userid');
+    const url = '/users/' + userID + '/delete';
+    if ($(this).hasClass('following')) {
+      $(this).text('Follow');
+      $(this).removeClass('following');
+    } else {
+      $(this).text('Unfollow');
+      $(this).addClass('following');
+    }
+    $.ajax({
+      type: 'POST',
+      url: url,
+      success: function(data) {
+        console.log('Unfollow the user');
+      },
+      error: function(data) {
+        console.log('not sent');
+      },
+    });
+  });
+
   $('.tweet__edit').on('click', function(e) {
     e.preventDefault();
     let $editButton = $(e.target);
