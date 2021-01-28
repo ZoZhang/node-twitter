@@ -1,12 +1,12 @@
 {
-  "name": "nwitter",
-  "description": "A twitter clone written with Node.js, Express, and MongoDB",
-  "version": "2.1.0",
-  "repository": "https://github.com/vinitkumar/node-twitter",
+  "name": "ihm2-witter",
+  "description": "A simple twitter clone by ntwitter, written with Node.js, Express, and MongoDB",
+  "version": "1.1.0",
+  "repository": "https://github.com/ZoZhang/node-twitter",
   "private": false,
-  "author": "Vinit Kumar <vinit1414.08@bitmesra.ac.in> (http://vinitkumar.me)",
+  "author": "Zhao ZHANG <zo.zhang@gmail.com> (http://zozhang.io)",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "nodemon index.js",
     "test": "make test",
     "upgrade-interactive": "npm-check --update",
     "postinstall": "opencollective postinstall"
@@ -61,6 +61,7 @@
     "grunt-sass": "latest",
     "js-yaml": "^3.14.0",
     "mocha": "^8.2.0",
+    "node-sass": "^5.0.0",
     "nodemon": "latest",
     "npm-check": "^5.9.2",
     "should": "latest",
